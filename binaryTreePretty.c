@@ -1,6 +1,8 @@
+//This program can insert data into  binary tree ,and then print it in inorder,preorder,postorder,and in 2 DIMENSIONS
+
 #include<stdio.h>
 #include<stdlib.h>
-#define COUNT 10 
+#define COUNT 10
 
 typedef struct node
 {
@@ -26,7 +28,7 @@ int is_rch(Node *tree)
 }
 
 void create(Node *tree)
-{   
+{
     if(is_rch(tree)==1)
     {
        temp = (Node *)malloc(sizeof(Node));
@@ -52,44 +54,85 @@ void create(Node *tree)
 }
 void delete()
 {
-    
+
+}
+void preorder(Node *tree)
+{
+    if(tree!=NULL)
+    {
+        printf("%d ",tree->data);
+        preorder(tree->lch);
+        preorder(tree->rch);
+    }
+}
+void postorder(Node *tree)
+{
+    if(tree!=NULL)
+    {
+        postorder(tree->lch);
+        postorder(tree->rch);
+        printf("%d ",tree->data);
+    }
+}
+void inorder(Node *tree)
+{
+    if(tree!=NULL)
+    {
+        inorder(tree->lch);
+        printf("%d ",tree->data);
+        inorder(tree->rch);
+    }
 }
 
-void print2DUtil(Node *root, int space) 
-{ 
-     
-    if (root == NULL) 
-        return; 
-  
-    
-    space += COUNT; 
-  
-    print2DUtil(root->rch, space); 
-  
-    printf("\n"); 
-    for (int i = COUNT; i < space; i++) 
-        printf(" "); 
-    printf("%d\n", root->data); 
-  
-    print2DUtil(root->lch, space); 
-} 
-  
 
-void print2D() 
-{ 
-   print2DUtil(root, 0); 
-} 
+void print2Dimensional(Node *root, int space)
+{
+
+    if (root == NULL)
+        return;
+
+
+    space += COUNT;
+
+    print2Dimensional(root->rch, space);
+
+    printf("\n");
+    for (int i = COUNT; i < space; i++)
+        printf(" ");
+    printf("%d\n", root->data);
+
+    print2Dimensional(root->lch, space);
+}
+
+
+void print2D()
+{
+   print2Dimensional(root, 0);
+}
 
 void main()
-{
-	root = (Node *)malloc(sizeof(Node));
-    printf("\n Enter the data");
+{ int ch;
+	  root = (Node *)malloc(sizeof(Node));
+    printf("\n Enter the data for the root");
     scanf("%d",&root->data);
     root->lch = NULL;
     root->rch = NULL;
-    
+
     create(root);
-    
-    print2D();
-       
+    while(1)
+    {
+        printf("\nDo you want to print the tree \n1. Inorder Traversal\n2.Preorder Traveral\n3.Postorder Traversal\n4.print in 2 dinmension:\n\t");
+        scanf("%d",&ch);
+        switch (ch) {
+        case 1: inorder(root);
+                break;
+        case 2: preorder(root);
+                break;
+        case 3: postorder(root);
+                break;
+        case 4: print2D();
+                break;
+        }
+    }
+
 }
